@@ -5,6 +5,155 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Remote Support Downloads</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Interactive background animation */
+    .area {
+      background: #4e54c8;
+      background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+      background: linear-gradient(to left, #8f94fb, #4e54c8);
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      z-index: -1;
+    }
+
+    .circles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .circles li {
+      position: absolute;
+      display: block;
+      list-style: none;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      animation: animate 25s linear infinite;
+      bottom: -150px;
+      border-radius: 50%;
+    }
+
+    .circles li:nth-child(1) {
+      left: 25%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 0s;
+    }
+
+    .circles li:nth-child(2) {
+      left: 10%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 2s;
+      animation-duration: 12s;
+    }
+
+    .circles li:nth-child(3) {
+      left: 70%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 4s;
+    }
+
+    .circles li:nth-child(4) {
+      left: 40%;
+      width: 60px;
+      height: 60px;
+      animation-delay: 0s;
+      animation-duration: 18s;
+    }
+
+    .circles li:nth-child(5) {
+      left: 65%;
+      width: 20px;
+      height: 20px;
+      animation-delay: 0s;
+    }
+
+    .circles li:nth-child(6) {
+      left: 75%;
+      width: 110px;
+      height: 110px;
+      animation-delay: 3s;
+    }
+
+    .circles li:nth-child(7) {
+      left: 35%;
+      width: 150px;
+      height: 150px;
+      animation-delay: 7s;
+    }
+
+    .circles li:nth-child(8) {
+      left: 50%;
+      width: 25px;
+      height: 25px;
+      animation-delay: 15s;
+      animation-duration: 45s;
+    }
+
+    .circles li:nth-child(9) {
+      left: 20%;
+      width: 15px;
+      height: 15px;
+      animation-delay: 2s;
+      animation-duration: 35s;
+    }
+
+    .circles li:nth-child(10) {
+      left: 85%;
+      width: 150px;
+      height: 150px;
+      animation-delay: 0s;
+      animation-duration: 11s;
+    }
+
+    @keyframes animate {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+      }
+
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+      }
+    }
+
+    /* Dark mode support */
+    .dark {
+      color-scheme: dark;
+    }
+    
+    .dark body {
+      color: #f9fafb;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      html {
+        color-scheme: dark;
+      }
+    }
+
+    /* Card glass effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .dark .glass {
+      background: rgba(17, 24, 39, 0.25);
+    }
+  </style>
   <script>
     // Enable dark mode based on user preference
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -16,135 +165,102 @@
       document.documentElement.classList.toggle('dark');
     }
   </script>
-  <style>
-    .dark {
-      color-scheme: dark;
-    }
-    
-    .dark body {
-      background-color: #111827;
-      color: #f9fafb;
-    }
-    
-    @media (prefers-color-scheme: dark) {
-      html {
-        color-scheme: dark;
-      }
-    }
-  </style>
 </head>
-<body class="bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen">
-  <!-- Hero Section -->
-  <div class="container mx-auto px-6 py-16">
+<body class="min-h-screen">
+  <!-- Interactive Background -->
+  <div class="area">
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <!-- Content -->
+  <div class="container mx-auto px-6 py-16 relative z-10">
     <div class="text-center">
-      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Remote Support</h1>
-      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-gray-600 dark:text-gray-300">Download our secure remote support tool and get help instantly.</p>
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-white">Remote Support</h1>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-white opacity-90">Download our secure remote support tool</p>
     </div>
     
     <!-- Download Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-16 mb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-16 mb-16">
       <!-- Windows Card -->
-      <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-md opacity-25 group-hover:opacity-75 transition duration-300"></div>
-        <div class="relative bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl hover:transform hover:scale-[1.01] transition-all duration-300">
-          <div class="flex justify-center mb-6">
-            <svg class="w-20 h-20 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Windows</h2>
-          <p class="mb-6 text-gray-500 dark:text-gray-400">Compatible with Windows 7, 8, 10, and 11</p>
-          <a href="https://example.com/support-tool-windows.exe" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
+      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+        <div class="flex justify-center mb-6">
+          <!-- Windows Logo -->
+          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 3.449L9.75 2.1V11.551H0V3.449ZM10.949 1.949L24 0V11.4H10.949V1.949ZM0 12.6H9.75V22.051L0 20.699V12.6ZM10.949 12.6H24V24L11.1 22.199" />
+          </svg>
         </div>
+        <h2 class="text-2xl font-bold mb-2 text-white text-center">Windows</h2>
+        <p class="mb-6 text-white opacity-80 text-center">Compatible with Windows 7, 8, 10, and 11<br>(2009-present)</p>
+        <a href="https://example.com/support-tool-windows.exe" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
       </div>
       
-      <!-- macOS Card -->
-      <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-md opacity-25 group-hover:opacity-75 transition duration-300"></div>
-        <div class="relative bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl hover:transform hover:scale-[1.01] transition-all duration-300">
-          <div class="flex justify-center mb-6">
-            <svg class="w-20 h-20 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">macOS</h2>
-          <p class="mb-6 text-gray-500 dark:text-gray-400">For macOS 10.13 (High Sierra) and newer</p>
-          <a href="https://example.com/support-tool-mac.dmg" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
+      <!-- macOS Intel Card -->
+      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+        <div class="flex justify-center mb-6">
+          <!-- Apple Logo -->
+          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.095 4.198c.877-1.094 1.55-2.625.947-4.198-1.064.073-2.28.752-2.985 1.661-.796.914-1.337 2.29-.873 3.634 1.142.086 2.32-.591 2.911-1.097zM20.644 16.41c-.421.861-.624 1.238-1.178 1.989-.77 1.041-1.861 2.334-3.208 2.346-1.199.023-1.505-.775-3.134-.762-1.63.015-1.96.786-3.159.764-1.348-.013-2.38-1.18-3.152-2.223-2.15-2.902-2.368-6.304-.989-8.115.967-1.262 2.494-1.997 3.938-1.997 1.482 0 2.411.78 3.635.78 1.188 0 1.912-.782 3.624-.782 1.292 0 2.664.567 3.636 1.553-3.201 1.651-2.684 5.944.987 6.447z" />
+          </svg>
         </div>
+        <h2 class="text-2xl font-bold mb-2 text-white text-center">macOS (Intel)</h2>
+        <p class="mb-6 text-white opacity-80 text-center">For Intel-based Mac computers<br>(2006-2020)</p>
+        <a href="https://example.com/support-tool-mac-intel.dmg" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
       </div>
       
-      <!-- Linux Card -->
-      <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-md opacity-25 group-hover:opacity-75 transition duration-300"></div>
-        <div class="relative bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl hover:transform hover:scale-[1.01] transition-all duration-300">
-          <div class="flex justify-center mb-6">
-            <svg class="w-20 h-20 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Linux</h2>
-          <p class="mb-6 text-gray-500 dark:text-gray-400">For Ubuntu, Debian, and other distros</p>
-          <a href="https://example.com/support-tool-linux.deb" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
+      <!-- macOS Apple Silicon Card -->
+      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+        <div class="flex justify-center mb-6">
+          <!-- Apple Silicon Logo (using Apple logo) -->
+          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.095 4.198c.877-1.094 1.55-2.625.947-4.198-1.064.073-2.28.752-2.985 1.661-.796.914-1.337 2.29-.873 3.634 1.142.086 2.32-.591 2.911-1.097zM20.644 16.41c-.421.861-.624 1.238-1.178 1.989-.77 1.041-1.861 2.334-3.208 2.346-1.199.023-1.505-.775-3.134-.762-1.63.015-1.96.786-3.159.764-1.348-.013-2.38-1.18-3.152-2.223-2.15-2.902-2.368-6.304-.989-8.115.967-1.262 2.494-1.997 3.938-1.997 1.482 0 2.411.78 3.635.78 1.188 0 1.912-.782 3.624-.782 1.292 0 2.664.567 3.636 1.553-3.201 1.651-2.684 5.944.987 6.447z" />
+          </svg>
         </div>
+        <h2 class="text-2xl font-bold mb-2 text-white text-center">macOS (Apple Silicon)</h2>
+        <p class="mb-6 text-white opacity-80 text-center">For M1/M2/M3 Mac computers<br>(2020-present)</p>
+        <a href="https://example.com/support-tool-mac-silicon.dmg" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
       </div>
       
       <!-- iOS Card -->
-      <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-md opacity-25 group-hover:opacity-75 transition duration-300"></div>
-        <div class="relative bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl hover:transform hover:scale-[1.01] transition-all duration-300">
-          <div class="flex justify-center mb-6">
-            <svg class="w-20 h-20 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">iOS</h2>
-          <p class="mb-6 text-gray-500 dark:text-gray-400">For iPhone and iPad running iOS 12+</p>
-          <a href="https://apps.apple.com/app/example-remote-support" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on App Store</a>
+      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+        <div class="flex justify-center mb-6">
+          <!-- iOS Logo (using Apple logo) -->
+          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.095 4.198c.877-1.094 1.55-2.625.947-4.198-1.064.073-2.28.752-2.985 1.661-.796.914-1.337 2.29-.873 3.634 1.142.086 2.32-.591 2.911-1.097zM20.644 16.41c-.421.861-.624 1.238-1.178 1.989-.77 1.041-1.861 2.334-3.208 2.346-1.199.023-1.505-.775-3.134-.762-1.63.015-1.96.786-3.159.764-1.348-.013-2.38-1.18-3.152-2.223-2.15-2.902-2.368-6.304-.989-8.115.967-1.262 2.494-1.997 3.938-1.997 1.482 0 2.411.78 3.635.78 1.188 0 1.912-.782 3.624-.782 1.292 0 2.664.567 3.636 1.553-3.201 1.651-2.684 5.944.987 6.447z" />
+          </svg>
         </div>
+        <h2 class="text-2xl font-bold mb-2 text-white text-center">iOS</h2>
+        <p class="mb-6 text-white opacity-80 text-center">For iPhone and iPad<br>(iOS 12 and newer, 2018-present)</p>
+        <a href="https://apps.apple.com/app/example-remote-support" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on App Store</a>
       </div>
       
       <!-- Android Card -->
-      <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-md opacity-25 group-hover:opacity-75 transition duration-300"></div>
-        <div class="relative bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl hover:transform hover:scale-[1.01] transition-all duration-300">
-          <div class="flex justify-center mb-6">
-            <svg class="w-20 h-20 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Android</h2>
-          <p class="mb-6 text-gray-500 dark:text-gray-400">For Android 8.0 (Oreo) and newer</p>
-          <a href="https://play.google.com/store/apps/details?id=com.example.remotesupport" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on Google Play</a>
+      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+        <div class="flex justify-center mb-6">
+          <!-- Android Logo -->
+          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.523 15.34h.804v3.858c0 1.003.802 1.802 1.802 1.802s1.803-.8 1.803-1.802V15.34h.801v-9.317H17.53l-.007 9.317zm-7.216 6.844c1.003 0 1.803-.8 1.803-1.802v-3.858h.803V9.163L7.12 9.16v9.322h.803v3.858c0 1.002.797 1.803 1.795 1.803s1.8-.8 1.8-1.803v-3.858h.798v3.858c0 1.002.8 1.803 1.803 1.803zm-8.126-6.844h.798v3.858c0 1.003.8 1.802 1.803 1.802s1.803-.8 1.803-1.802V15.34h.798V6.023L2.18 6.02v9.32zm8.923-4.497a.88.88 0 0 0 .878-.878.88.88 0 0 0-.878-.879.88.88 0 0 0-.879.879c0 .483.395.878.879.878zm6.41-.878a.88.88 0 0 0-.878.878c0 .483.395.878.878.878a.88.88 0 0 0 .879-.878.88.88 0 0 0-.879-.878zm3.72-3.455L19.568.387a.255.255 0 0 0-.346-.099.255.255 0 0 0-.1.346l1.728 2.99c-1.824-.885-3.87-1.384-6.042-1.384s-4.218.499-6.042 1.383l1.731-3a.254.254 0 0 0-.1-.346.255.255 0 0 0-.346.1l-2.669 4.62a12.268 12.268 0 0 0-5.39 10.14H23.04c0-3.996-1.94-7.648-5.028-9.856z" />
+          </svg>
         </div>
-      </div>
-    </div>
-    
-    <!-- Contact Info -->
-    <div class="relative max-w-3xl mx-auto mt-24 mb-6">
-      <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur-md opacity-25"></div>
-      <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 text-center">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Need Help?</h2>
-        <p class="text-gray-600 dark:text-gray-300 mb-4">Our support team is here to assist you</p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="mailto:support@example.com" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-            <span class="text-gray-700 dark:text-gray-300">support@example.com</span>
-          </a>
-          <a href="tel:8005550123" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-            </svg>
-            <span class="text-gray-700 dark:text-gray-300">(800) 555-0123</span>
-          </a>
-        </div>
+        <h2 class="text-2xl font-bold mb-2 text-white text-center">Android</h2>
+        <p class="mb-6 text-white opacity-80 text-center">For Android devices<br>(Android 8.0 and newer, 2017-present)</p>
+        <a href="https://play.google.com/store/apps/details?id=com.example.remotesupport" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on Google Play</a>
       </div>
     </div>
     
     <!-- Dark Mode Toggle -->
     <div class="text-center mb-8">
-      <button onclick="toggleDarkMode()" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+      <button onclick="toggleDarkMode()" class="px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-lg text-white hover:text-white transition-colors">
         Toggle Dark/Light Mode
       </button>
     </div>
