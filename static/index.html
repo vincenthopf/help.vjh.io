@@ -57,6 +57,7 @@
       cursor: pointer;
       margin: 0 0.25rem;
       transition: all 0.2s;
+      text-align: center;
     }
     
     .dark .radio-container label {
@@ -67,12 +68,14 @@
       background-color: #000;
       color: white;
       border-color: #000;
+      text-align: center;
     }
     
     .dark .radio-container input[type="radio"]:checked + label {
       background-color: #fff;
       color: black;
       border-color: #fff;
+      text-align: center;
     }
   </style>
   <script>
@@ -116,7 +119,7 @@
         this.ctx = canvas.getContext('2d');
         this.particles = [];
         this.isDarkMode = document.documentElement.classList.contains('dark');
-        this.particleCount = Math.min(window.innerWidth, window.innerHeight) * 0.05;
+        this.particleCount = Math.min(window.innerWidth, window.innerHeight) * 0.1;
         this.mousePosition = { x: null, y: null };
         this.mouseRadius = 120;
         
@@ -125,10 +128,10 @@
         
         // Add event listeners
         window.addEventListener('resize', () => this.handleResize());
-        canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        canvas.addEventListener('mouseleave', () => this.handleMouseLeave());
-        canvas.addEventListener('touchmove', (e) => this.handleTouchMove(e));
-        canvas.addEventListener('touchend', () => this.handleMouseLeave());
+        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        document.addEventListener('mouseleave', () => this.handleMouseLeave());
+        document.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: true });
+        document.addEventListener('touchend', () => this.handleMouseLeave());
       }
       
       init() {
@@ -176,8 +179,8 @@
             if (distance < this.mouseRadius) {
               const angle = Math.atan2(dy, dx);
               const force = (this.mouseRadius - distance) / this.mouseRadius;
-              p.x += Math.cos(angle) * force * 2;
-              p.y += Math.sin(angle) * force * 2;
+              p.x += Math.cos(angle) * force * 4;
+              p.y += Math.sin(angle) * force * 4;
             }
           }
           
@@ -201,7 +204,7 @@
             const dy = p1.y - p2.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < Math.max(window.innerWidth, window.innerHeight) * 0.08) {
+            if (distance < Math.max(window.innerWidth, window.innerHeight) * 0.12) {
               // Add connection for both particles
               p1.connections.push(j);
               p2.connections.push(i);
@@ -231,7 +234,7 @@
         this.canvas.height = window.innerHeight;
         
         // Update particle count on resize
-        const newCount = Math.min(window.innerWidth, window.innerHeight) * 0.05;
+        const newCount = Math.min(window.innerWidth, window.innerHeight) * 0.1;
         
         // Add particles if needed
         if (newCount > this.particleCount) {
@@ -290,7 +293,7 @@
   <div class="container mx-auto px-6 py-16 relative z-10">
     <div class="text-center">
       <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-gray-900 dark:text-white">VJH.io Help</h1>
-      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-gray-700 dark:text-gray-300">These buttons download RustDesk.<br>You should only use them if you are on the phone with one of our Technicians.</p>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-gray-700 dark:text-gray-300 text-center">These buttons download RustDesk.<br>You should only use them if you are on the phone with one of our Technicians.</p>
     </div>
     
     <!-- Download Cards -->
