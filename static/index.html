@@ -6,133 +6,16 @@
   <title>Remote Support</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Interactive background animation */
-    .area {
-      background: #f8f8f8;
-      width: 100%;
-      height: 100vh;
+    /* Network background animation */
+    #network-canvas {
       position: fixed;
-      z-index: -1;
-    }
-
-    .dark .area {
-      background: #121212;
-    }
-
-    .circles {
-      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      z-index: -1;
     }
-
-    .circles li {
-      position: absolute;
-      display: block;
-      list-style: none;
-      width: 20px;
-      height: 20px;
-      background: rgba(0, 0, 0, 0.05);
-      animation: animate 25s linear infinite;
-      bottom: -150px;
-      border-radius: 50%;
-    }
-
-    .dark .circles li {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .circles li:nth-child(1) {
-      left: 25%;
-      width: 80px;
-      height: 80px;
-      animation-delay: 0s;
-    }
-
-    .circles li:nth-child(2) {
-      left: 10%;
-      width: 20px;
-      height: 20px;
-      animation-delay: 2s;
-      animation-duration: 12s;
-    }
-
-    .circles li:nth-child(3) {
-      left: 70%;
-      width: 20px;
-      height: 20px;
-      animation-delay: 4s;
-    }
-
-    .circles li:nth-child(4) {
-      left: 40%;
-      width: 60px;
-      height: 60px;
-      animation-delay: 0s;
-      animation-duration: 18s;
-    }
-
-    .circles li:nth-child(5) {
-      left: 65%;
-      width: 20px;
-      height: 20px;
-      animation-delay: 0s;
-    }
-
-    .circles li:nth-child(6) {
-      left: 75%;
-      width: 110px;
-      height: 110px;
-      animation-delay: 3s;
-    }
-
-    .circles li:nth-child(7) {
-      left: 35%;
-      width: 150px;
-      height: 150px;
-      animation-delay: 7s;
-    }
-
-    .circles li:nth-child(8) {
-      left: 50%;
-      width: 25px;
-      height: 25px;
-      animation-delay: 15s;
-      animation-duration: 45s;
-    }
-
-    .circles li:nth-child(9) {
-      left: 20%;
-      width: 15px;
-      height: 15px;
-      animation-delay: 2s;
-      animation-duration: 35s;
-    }
-
-    .circles li:nth-child(10) {
-      left: 85%;
-      width: 150px;
-      height: 150px;
-      animation-delay: 0s;
-      animation-duration: 11s;
-    }
-
-    @keyframes animate {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
-      }
-
-      100% {
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-        border-radius: 50%;
-      }
-    }
-
+    
     /* Dark mode support */
     .dark {
       color-scheme: dark;
@@ -194,13 +77,22 @@
   </style>
   <script>
     // Enable dark mode based on user preference
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.classList.add('dark');
+    function initDarkMode() {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
     }
     
     // Toggle dark mode function
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
+      
+      // Update canvas colors when dark mode changes
+      if (window.networkAnimation) {
+        window.networkAnimation.updateColors(
+          document.documentElement.classList.contains('dark')
+        );
+      }
     }
     
     // Function to update download links based on selection
@@ -216,24 +108,183 @@
         downloadBtn.textContent = "Download for Apple Silicon Mac";
       }
     }
+    
+    // Network background animation
+    class NetworkAnimation {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.isDarkMode = document.documentElement.classList.contains('dark');
+        this.particleCount = Math.min(window.innerWidth, window.innerHeight) * 0.05;
+        this.mousePosition = { x: null, y: null };
+        this.mouseRadius = 120;
+        
+        this.init();
+        this.animate();
+        
+        // Add event listeners
+        window.addEventListener('resize', () => this.handleResize());
+        canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        canvas.addEventListener('mouseleave', () => this.handleMouseLeave());
+        canvas.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+        canvas.addEventListener('touchend', () => this.handleMouseLeave());
+      }
+      
+      init() {
+        this.handleResize();
+        
+        // Create particles
+        this.particles = [];
+        for (let i = 0; i < this.particleCount; i++) {
+          this.particles.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            size: Math.random() * 1.5 + 1,
+            speedX: (Math.random() - 0.5) * 1,
+            speedY: (Math.random() - 0.5) * 1,
+            connections: []
+          });
+        }
+      }
+      
+      updateColors(isDarkMode) {
+        this.isDarkMode = isDarkMode;
+      }
+      
+      drawParticles() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Update and draw particles
+        for (let i = 0; i < this.particles.length; i++) {
+          let p = this.particles[i];
+          
+          // Move particle
+          p.x += p.speedX;
+          p.y += p.speedY;
+          
+          // Boundary check
+          if (p.x < 0 || p.x > this.canvas.width) p.speedX *= -1;
+          if (p.y < 0 || p.y > this.canvas.height) p.speedY *= -1;
+          
+          // Mouse repulsion
+          if (this.mousePosition.x !== null) {
+            const dx = p.x - this.mousePosition.x;
+            const dy = p.y - this.mousePosition.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < this.mouseRadius) {
+              const angle = Math.atan2(dy, dx);
+              const force = (this.mouseRadius - distance) / this.mouseRadius;
+              p.x += Math.cos(angle) * force * 2;
+              p.y += Math.sin(angle) * force * 2;
+            }
+          }
+          
+          // Draw the particle
+          this.ctx.beginPath();
+          this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = this.isDarkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.4)';
+          this.ctx.fill();
+          
+          // Clear connections array
+          p.connections = [];
+        }
+        
+        // Draw connections
+        this.ctx.beginPath();
+        for (let i = 0; i < this.particles.length; i++) {
+          for (let j = i + 1; j < this.particles.length; j++) {
+            const p1 = this.particles[i];
+            const p2 = this.particles[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < Math.max(window.innerWidth, window.innerHeight) * 0.08) {
+              // Add connection for both particles
+              p1.connections.push(j);
+              p2.connections.push(i);
+              
+              // Draw line
+              this.ctx.moveTo(p1.x, p1.y);
+              this.ctx.lineTo(p2.x, p2.y);
+            }
+          }
+        }
+        
+        // Style and draw all lines at once for better performance
+        this.ctx.strokeStyle = this.isDarkMode ? 
+          `rgba(255, 255, 255, ${Math.min(0.15, (100 / this.particleCount) * 0.3)})` : 
+          `rgba(0, 0, 0, ${Math.min(0.15, (100 / this.particleCount) * 0.3)})`;
+        this.ctx.lineWidth = 0.5;
+        this.ctx.stroke();
+      }
+      
+      animate() {
+        this.drawParticles();
+        requestAnimationFrame(() => this.animate());
+      }
+      
+      handleResize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        
+        // Update particle count on resize
+        const newCount = Math.min(window.innerWidth, window.innerHeight) * 0.05;
+        
+        // Add particles if needed
+        if (newCount > this.particleCount) {
+          const addCount = newCount - this.particleCount;
+          for (let i = 0; i < addCount; i++) {
+            this.particles.push({
+              x: Math.random() * this.canvas.width,
+              y: Math.random() * this.canvas.height,
+              size: Math.random() * 1.5 + 1,
+              speedX: (Math.random() - 0.5) * 1,
+              speedY: (Math.random() - 0.5) * 1,
+              connections: []
+            });
+          }
+        } else if (newCount < this.particleCount) {
+          // Remove particles if needed
+          this.particles = this.particles.slice(0, newCount);
+        }
+        
+        this.particleCount = newCount;
+      }
+      
+      handleMouseMove(e) {
+        this.mousePosition.x = e.clientX;
+        this.mousePosition.y = e.clientY;
+      }
+      
+      handleTouchMove(e) {
+        if (e.touches.length > 0) {
+          this.mousePosition.x = e.touches[0].clientX;
+          this.mousePosition.y = e.touches[0].clientY;
+        }
+      }
+      
+      handleMouseLeave() {
+        this.mousePosition.x = null;
+        this.mousePosition.y = null;
+      }
+    }
+    
+    // Initialize network animation when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      initDarkMode();
+      updateMacDownload();
+      
+      const canvas = document.getElementById('network-canvas');
+      window.networkAnimation = new NetworkAnimation(canvas);
+    });
   </script>
 </head>
 <body class="min-h-screen text-gray-900 dark:text-gray-100">
-  <!-- Interactive Background -->
-  <div class="area">
-    <ul class="circles">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
-  </div>
+  <!-- Network Canvas Background -->
+  <canvas id="network-canvas"></canvas>
 
   <!-- Content -->
   <div class="container mx-auto px-6 py-16 relative z-10">
