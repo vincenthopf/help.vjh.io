@@ -8,13 +8,15 @@
   <style>
     /* Interactive background animation */
     .area {
-      background: #4e54c8;
-      background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
-      background: linear-gradient(to left, #8f94fb, #4e54c8);
+      background: #f8f8f8;
       width: 100%;
       height: 100vh;
       position: fixed;
       z-index: -1;
+    }
+
+    .dark .area {
+      background: #121212;
     }
 
     .circles {
@@ -32,10 +34,14 @@
       list-style: none;
       width: 20px;
       height: 20px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.05);
       animation: animate 25s linear infinite;
       bottom: -150px;
       border-radius: 50%;
+    }
+
+    .dark .circles li {
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .circles li:nth-child(1) {
@@ -144,14 +150,46 @@
 
     /* Card glass effect */
     .glass {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .dark .glass {
-      background: rgba(17, 24, 39, 0.25);
+      background: rgba(30, 30, 30, 0.85);
+      border: 1px solid rgba(50, 50, 50, 0.5);
+    }
+    
+    /* Radio button styling */
+    .radio-container input[type="radio"] {
+      display: none;
+    }
+    
+    .radio-container label {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 0 0.25rem;
+      transition: all 0.2s;
+    }
+    
+    .dark .radio-container label {
+      border-color: #555;
+    }
+    
+    .radio-container input[type="radio"]:checked + label {
+      background-color: #000;
+      color: white;
+      border-color: #000;
+    }
+    
+    .dark .radio-container input[type="radio"]:checked + label {
+      background-color: #fff;
+      color: black;
+      border-color: #fff;
     }
   </style>
   <script>
@@ -164,9 +202,23 @@
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
     }
+    
+    // Function to update download links based on selection
+    function updateMacDownload() {
+      const intelRadio = document.getElementById('intel');
+      const downloadBtn = document.getElementById('mac-download-btn');
+      
+      if (intelRadio.checked) {
+        downloadBtn.href = "https://example.com/support-tool-mac-intel.dmg";
+        downloadBtn.textContent = "Download for Intel Mac";
+      } else {
+        downloadBtn.href = "https://example.com/support-tool-mac-silicon.dmg";
+        downloadBtn.textContent = "Download for Apple Silicon Mac";
+      }
+    }
   </script>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen text-gray-900 dark:text-gray-100">
   <!-- Interactive Background -->
   <div class="area">
     <ul class="circles">
@@ -186,81 +238,78 @@
   <!-- Content -->
   <div class="container mx-auto px-6 py-16 relative z-10">
     <div class="text-center">
-      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-white">Remote Support</h1>
-      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-white opacity-90">Download our secure remote support tool</p>
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-gray-900 dark:text-white">Remote Support</h1>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-gray-700 dark:text-gray-300">Download our secure remote support tool</p>
     </div>
     
     <!-- Download Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-16 mb-16">
       <!-- Windows Card -->
-      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+      <div class="glass rounded-xl shadow-lg p-8 hover:shadow-xl hover:transform hover:scale-[1.02] transition-all duration-300">
         <div class="flex justify-center mb-6">
-          <!-- Windows Logo -->
-          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 3.449L9.75 2.1V11.551H0V3.449ZM10.949 1.949L24 0V11.4H10.949V1.949ZM0 12.6H9.75V22.051L0 20.699V12.6ZM10.949 12.6H24V24L11.1 22.199" />
+          <!-- Windows Logo - More accurate -->
+          <svg class="w-24 h-24" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,12.402,35.687,7.971v34.453H0ZM35.687,48.421v34.45L0,78.444V48.421ZM39.996,7.348l47.567-6.964v41.04H39.996Zm47.567,41.075v41.037l-47.567-6.96V48.421Z" fill="#000000" class="dark:fill-white"/>
           </svg>
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-white text-center">Windows</h2>
-        <p class="mb-6 text-white opacity-80 text-center">Compatible with Windows 7, 8, 10, and 11<br>(2009-present)</p>
-        <a href="https://example.com/support-tool-windows.exe" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
+        <h2 class="text-2xl font-bold mb-2 text-center">Windows</h2>
+        <p class="mb-6 text-gray-600 dark:text-gray-400 text-center">Compatible with Windows 7, 8, 10, and 11<br>(2009-present)</p>
+        <a href="https://example.com/support-tool-windows.exe" class="block w-full py-3 px-4 bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
       </div>
       
-      <!-- macOS Intel Card -->
-      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+      <!-- macOS Integrated Card -->
+      <div class="glass rounded-xl shadow-lg p-8 hover:shadow-xl hover:transform hover:scale-[1.02] transition-all duration-300">
         <div class="flex justify-center mb-6">
-          <!-- Apple Logo -->
-          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14.095 4.198c.877-1.094 1.55-2.625.947-4.198-1.064.073-2.28.752-2.985 1.661-.796.914-1.337 2.29-.873 3.634 1.142.086 2.32-.591 2.911-1.097zM20.644 16.41c-.421.861-.624 1.238-1.178 1.989-.77 1.041-1.861 2.334-3.208 2.346-1.199.023-1.505-.775-3.134-.762-1.63.015-1.96.786-3.159.764-1.348-.013-2.38-1.18-3.152-2.223-2.15-2.902-2.368-6.304-.989-8.115.967-1.262 2.494-1.997 3.938-1.997 1.482 0 2.411.78 3.635.78 1.188 0 1.912-.782 3.624-.782 1.292 0 2.664.567 3.636 1.553-3.201 1.651-2.684 5.944.987 6.447z" />
+          <!-- Apple Logo - More accurate -->
+          <svg class="w-24 h-24" viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.197-2.12-9.973-3.17-14.34-3.17-4.58 0-9.492 1.05-14.746 3.17-5.262 2.13-9.501 3.24-12.742 3.35-4.929 0.21-9.842-1.96-14.746-6.52-3.13-2.73-7.045-7.41-11.735-14.04-5.032-7.08-9.169-15.29-12.41-24.65-3.471-10.11-5.211-19.9-5.211-29.378 0-10.857 2.346-20.221 7.045-28.068 3.693-6.303 8.606-11.275 14.755-14.925s12.793-5.51 19.948-5.629c3.915 0 9.049 1.211 15.429 3.591 6.362 2.388 10.447 3.599 12.238 3.599 1.339 0 5.877-1.416 13.57-4.239 7.275-2.618 13.415-3.702 18.445-3.275 13.63 1.1 23.87 6.473 30.68 16.153-12.19 7.386-18.22 17.731-18.1 31.002 0.11 10.337 3.86 18.939 11.23 25.769 3.34 3.17 7.07 5.62 11.22 7.36-0.9 2.61-1.85 5.11-2.86 7.51zM119.11 7.24c0 8.102-2.96 15.667-8.86 22.669-7.12 8.324-15.732 13.134-25.071 12.375-0.119-0.972-0.188-1.995-0.188-3.07 0-7.778 3.386-16.102 9.399-22.908 3.002-3.446 6.82-6.311 11.45-8.597 4.62-2.252 8.99-3.497 13.1-3.71 0.12 1.083 0.17 2.166 0.17 3.241z" fill="#000000" class="dark:fill-white"/>
           </svg>
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-white text-center">macOS (Intel)</h2>
-        <p class="mb-6 text-white opacity-80 text-center">For Intel-based Mac computers<br>(2006-2020)</p>
-        <a href="https://example.com/support-tool-mac-intel.dmg" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
-      </div>
-      
-      <!-- macOS Apple Silicon Card -->
-      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
-        <div class="flex justify-center mb-6">
-          <!-- Apple Silicon Logo (using Apple logo) -->
-          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14.095 4.198c.877-1.094 1.55-2.625.947-4.198-1.064.073-2.28.752-2.985 1.661-.796.914-1.337 2.29-.873 3.634 1.142.086 2.32-.591 2.911-1.097zM20.644 16.41c-.421.861-.624 1.238-1.178 1.989-.77 1.041-1.861 2.334-3.208 2.346-1.199.023-1.505-.775-3.134-.762-1.63.015-1.96.786-3.159.764-1.348-.013-2.38-1.18-3.152-2.223-2.15-2.902-2.368-6.304-.989-8.115.967-1.262 2.494-1.997 3.938-1.997 1.482 0 2.411.78 3.635.78 1.188 0 1.912-.782 3.624-.782 1.292 0 2.664.567 3.636 1.553-3.201 1.651-2.684 5.944.987 6.447z" />
-          </svg>
+        <h2 class="text-2xl font-bold mb-2 text-center">macOS</h2>
+        <p class="mb-4 text-gray-600 dark:text-gray-400 text-center">Select your Mac type:</p>
+        
+        <!-- Radio button selector -->
+        <div class="radio-container flex justify-center mb-6">
+          <input type="radio" id="intel" name="mac-type" checked onchange="updateMacDownload()">
+          <label for="intel" class="text-sm">Intel Mac (2006-2020)</label>
+          
+          <input type="radio" id="silicon" name="mac-type" onchange="updateMacDownload()">
+          <label for="silicon" class="text-sm">Apple Silicon (2020-present)</label>
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-white text-center">macOS (Apple Silicon)</h2>
-        <p class="mb-6 text-white opacity-80 text-center">For M1/M2/M3 Mac computers<br>(2020-present)</p>
-        <a href="https://example.com/support-tool-mac-silicon.dmg" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download</a>
+        
+        <a id="mac-download-btn" href="https://example.com/support-tool-mac-intel.dmg" class="block w-full py-3 px-4 bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download for Intel Mac</a>
       </div>
       
       <!-- iOS Card -->
-      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+      <div class="glass rounded-xl shadow-lg p-8 hover:shadow-xl hover:transform hover:scale-[1.02] transition-all duration-300">
         <div class="flex justify-center mb-6">
           <!-- iOS Logo (using Apple logo) -->
-          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14.095 4.198c.877-1.094 1.55-2.625.947-4.198-1.064.073-2.28.752-2.985 1.661-.796.914-1.337 2.29-.873 3.634 1.142.086 2.32-.591 2.911-1.097zM20.644 16.41c-.421.861-.624 1.238-1.178 1.989-.77 1.041-1.861 2.334-3.208 2.346-1.199.023-1.505-.775-3.134-.762-1.63.015-1.96.786-3.159.764-1.348-.013-2.38-1.18-3.152-2.223-2.15-2.902-2.368-6.304-.989-8.115.967-1.262 2.494-1.997 3.938-1.997 1.482 0 2.411.78 3.635.78 1.188 0 1.912-.782 3.624-.782 1.292 0 2.664.567 3.636 1.553-3.201 1.651-2.684 5.944.987 6.447z" />
+          <svg class="w-24 h-24" viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.197-2.12-9.973-3.17-14.34-3.17-4.58 0-9.492 1.05-14.746 3.17-5.262 2.13-9.501 3.24-12.742 3.35-4.929 0.21-9.842-1.96-14.746-6.52-3.13-2.73-7.045-7.41-11.735-14.04-5.032-7.08-9.169-15.29-12.41-24.65-3.471-10.11-5.211-19.9-5.211-29.378 0-10.857 2.346-20.221 7.045-28.068 3.693-6.303 8.606-11.275 14.755-14.925s12.793-5.51 19.948-5.629c3.915 0 9.049 1.211 15.429 3.591 6.362 2.388 10.447 3.599 12.238 3.599 1.339 0 5.877-1.416 13.57-4.239 7.275-2.618 13.415-3.702 18.445-3.275 13.63 1.1 23.87 6.473 30.68 16.153-12.19 7.386-18.22 17.731-18.1 31.002 0.11 10.337 3.86 18.939 11.23 25.769 3.34 3.17 7.07 5.62 11.22 7.36-0.9 2.61-1.85 5.11-2.86 7.51zM119.11 7.24c0 8.102-2.96 15.667-8.86 22.669-7.12 8.324-15.732 13.134-25.071 12.375-0.119-0.972-0.188-1.995-0.188-3.07 0-7.778 3.386-16.102 9.399-22.908 3.002-3.446 6.82-6.311 11.45-8.597 4.62-2.252 8.99-3.497 13.1-3.71 0.12 1.083 0.17 2.166 0.17 3.241z" fill="#000000" class="dark:fill-white"/>
           </svg>
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-white text-center">iOS</h2>
-        <p class="mb-6 text-white opacity-80 text-center">For iPhone and iPad<br>(iOS 12 and newer, 2018-present)</p>
-        <a href="https://apps.apple.com/app/example-remote-support" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on App Store</a>
+        <h2 class="text-2xl font-bold mb-2 text-center">iOS</h2>
+        <p class="mb-6 text-gray-600 dark:text-gray-400 text-center">For iPhone and iPad<br>(iOS 12 and newer, 2018-present)</p>
+        <a href="https://apps.apple.com/app/example-remote-support" class="block w-full py-3 px-4 bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on App Store</a>
       </div>
       
       <!-- Android Card -->
-      <div class="glass rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300">
+      <div class="glass rounded-xl shadow-lg p-8 hover:shadow-xl hover:transform hover:scale-[1.02] transition-all duration-300">
         <div class="flex justify-center mb-6">
-          <!-- Android Logo -->
-          <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.523 15.34h.804v3.858c0 1.003.802 1.802 1.802 1.802s1.803-.8 1.803-1.802V15.34h.801v-9.317H17.53l-.007 9.317zm-7.216 6.844c1.003 0 1.803-.8 1.803-1.802v-3.858h.803V9.163L7.12 9.16v9.322h.803v3.858c0 1.002.797 1.803 1.795 1.803s1.8-.8 1.8-1.803v-3.858h.798v3.858c0 1.002.8 1.803 1.803 1.803zm-8.126-6.844h.798v3.858c0 1.003.8 1.802 1.803 1.802s1.803-.8 1.803-1.802V15.34h.798V6.023L2.18 6.02v9.32zm8.923-4.497a.88.88 0 0 0 .878-.878.88.88 0 0 0-.878-.879.88.88 0 0 0-.879.879c0 .483.395.878.879.878zm6.41-.878a.88.88 0 0 0-.878.878c0 .483.395.878.878.878a.88.88 0 0 0 .879-.878.88.88 0 0 0-.879-.878zm3.72-3.455L19.568.387a.255.255 0 0 0-.346-.099.255.255 0 0 0-.1.346l1.728 2.99c-1.824-.885-3.87-1.384-6.042-1.384s-4.218.499-6.042 1.383l1.731-3a.254.254 0 0 0-.1-.346.255.255 0 0 0-.346.1l-2.669 4.62a12.268 12.268 0 0 0-5.39 10.14H23.04c0-3.996-1.94-7.648-5.028-9.856z" />
+          <!-- Android Logo - More accurate -->
+          <svg class="w-24 h-24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.6,9.48l1.84-3.18c0.16-0.31,0.04-0.69-0.26-0.85c-0.29-0.15-0.65-0.06-0.83,0.22l-1.88,3.24 c-2.86-1.21-6.08-1.21-8.94,0L5.65,5.67c-0.19-0.29-0.58-0.38-0.87-0.2C4.5,5.65,4.41,6.01,4.56,6.3L6.4,9.48 C3.3,11.25,1.28,14.44,1,18h22C22.72,14.44,20.7,11.25,17.6,9.48z M7,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25S8.25,13.31,8.25,14C8.25,14.69,7.69,15.25,7,15.25z M17,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25s1.25,0.56,1.25,1.25C18.25,14.69,17.69,15.25,17,15.25z" fill="#000000" class="dark:fill-white"/>
           </svg>
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-white text-center">Android</h2>
-        <p class="mb-6 text-white opacity-80 text-center">For Android devices<br>(Android 8.0 and newer, 2017-present)</p>
-        <a href="https://play.google.com/store/apps/details?id=com.example.remotesupport" class="block w-full py-3 px-4 bg-white hover:bg-opacity-90 bg-opacity-80 text-blue-600 font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on Google Play</a>
+        <h2 class="text-2xl font-bold mb-2 text-center">Android</h2>
+        <p class="mb-6 text-gray-600 dark:text-gray-400 text-center">For Android devices<br>(Android 8.0 and newer, 2017-present)</p>
+        <a href="https://play.google.com/store/apps/details?id=com.example.remotesupport" class="block w-full py-3 px-4 bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black font-medium rounded-lg text-center shadow-md hover:shadow-lg transition-all duration-300">Download on Google Play</a>
       </div>
     </div>
     
     <!-- Dark Mode Toggle -->
     <div class="text-center mb-8">
-      <button onclick="toggleDarkMode()" class="px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-lg text-white hover:text-white transition-colors">
+      <button onclick="toggleDarkMode()" class="px-4 py-2 bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg transition-colors">
         Toggle Dark/Light Mode
       </button>
     </div>
